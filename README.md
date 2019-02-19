@@ -16,7 +16,7 @@
 
   ***网络结构***
   
-  ！[fcn32](https://github.com/stesha2016/tensorflow-semantic-segmentation/blob/master/images/FCN32.png)
+  ![FCN32](https://github.com/stesha2016/tensorflow-semantic-segmentation/blob/master/images/FCN32.png)
   
   ***数据准备***
   
