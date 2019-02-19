@@ -14,17 +14,17 @@
 
 * FCN32
 
-  *网络结构*
+  ***网络结构***
   
-  ![fcn32](https://github.com/stesha2016/tensorflow-semantic-segmentation/tree/master/images/FCN32.png)
+  ！[fcn32](https://github.com/stesha2016/tensorflow-semantic-segmentation/blob/master/images/FCN32.png)
   
-  *数据准备*
+  ***数据准备***
   
   使用[LabelImgTool
 ](https://github.com/lzx1413/LabelImgTool)之类的工具对图片进行标记，标记后会生成一张新的图片，
 这张图片在你标记的物体1的区域的像素点都是(1,1,1)，在物体2的区域像素点都是(2,2,2)，以此类推。
   
-  *Loss约束*
+  ***Loss约束***
   
   从网络结构可以看出最后网络的output是224x224xclasses的矩阵，而ground truth就是我们标记出来的数据是224x224x3，
   我们需要对ground truth做一点改变。对224x224x3的ground truth取出一个色度224x224，那么这个224x224的矩阵中物体1
