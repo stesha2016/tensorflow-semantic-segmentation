@@ -18,6 +18,8 @@
   
   ![FCN32](https://github.com/stesha2016/tensorflow-semantic-segmentation/blob/master/images/FCN32.png)
   
+  经过了5次pool，所以图片缩小了32倍，然后在基于这个尺寸的图片恢复到了原图尺寸，所以叫做FCN32
+  
   ***数据准备***
   
   使用[LabelImgTool
@@ -38,6 +40,24 @@
   ***网络结构***
   
   ![FCN16](https://github.com/stesha2016/tensorflow-semantic-segmentation/blob/master/images/FCN16.png)
+  
+  经过了5次pool后，与pool4相加后恢复成原图的尺寸，pool4相对原图缩小了16倍，所以叫做FCN16
+  
+  ***数据准备***
+  
+  同FCN32
+  
+  ***Loss约束***
+  
+  同FCN32
+  
+* FCN8
+  
+  ***网络结构***
+  
+  ![FCN8](https://github.com/stesha2016/tensorflow-semantic-segmentation/blob/master/images/FCN8.png)
+  
+  经过了5次pool后，将pool5与pool4都恢复到pool3的尺寸，然后与pool3相加后的结果再恢复成原图尺寸，pool3相对原图缩小了8倍，所以叫做FCN8
   
   ***数据准备***
   

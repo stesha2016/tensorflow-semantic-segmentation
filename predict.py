@@ -5,7 +5,7 @@ import numpy as np
 import itertools
 import model_factory as mf
 
-tf.app.flags.DEFINE_string('model_name', 'fcn16vgg', 'model name')
+tf.app.flags.DEFINE_string('model_name', 'fcn8vgg', 'model name')
 tf.app.flags.DEFINE_integer('size', 224, 'input height, width')
 tf.app.flags.DEFINE_string('logs_path', './logs/boxes.h5', 'checkpoint files')
 tf.app.flags.DEFINE_integer('num_classes', 2, '')
