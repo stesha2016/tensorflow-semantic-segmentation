@@ -31,5 +31,18 @@
   的位置的数值是1，物体2的位置的数值为2，背景位置的数字为0，然后我们用一种类似one hot的方式就可以将数据变成224x224xclasses。
   
   比如如果classes为5，那么ground truth矩阵中，物体1的位置数组是[0, 1, 0, 0, 0]，物体2的位置数组是[0, 0, 1, 0, 0],
-  背景位置的数组是[1, 0, 0, 0, 0]，这样就可以顺利的和网络结构生成的矩阵在axis=2的维度进行cross entropy比较了。
+  背景位置的数组是[1, 0, 0, 0, 0]，这样就可以顺利的和网络结构生成的矩阵在axis=2的维度计算cross entropy loss了。
   
+* FCN16
+  
+  ***网络结构***
+  
+  ![FCN16](https://github.com/stesha2016/tensorflow-semantic-segmentation/blob/master/images/FCN16.png)
+  
+  ***数据准备***
+  
+  同FCN32
+  
+  ***Loss约束***
+  
+  同FCN32

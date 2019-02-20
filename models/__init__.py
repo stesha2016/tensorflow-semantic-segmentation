@@ -1,1 +1,2 @@
 import fcn32_vgg
+import fcn16_vgg

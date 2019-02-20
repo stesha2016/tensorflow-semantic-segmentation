@@ -4,8 +4,9 @@ import cv2
 import glob
 import numpy as np
 import itertools
+import model_factory as mf
 
-tf.app.flags.DEFINE_string('model_name', 'fcn32vgg', 'model name')
+tf.app.flags.DEFINE_string('model_name', 'fcn16vgg', 'model name')
 tf.app.flags.DEFINE_integer('size', 224, 'input height, width')
 tf.app.flags.DEFINE_string('logs_path', './logs', 'checkpoint files')
 tf.app.flags.DEFINE_integer('num_classes', 2, '')
@@ -65,8 +66,7 @@ def minibatch(img_path, seg_path, num_classes, batch_size, img_size):
       yield np.array(X), np.array(Y)
 
 def train():
-  modelSet = {'fcn32vgg':models.fcn32_vgg.FCN32VGG}
-  myModel = modelSet[FLAGS.model_name]()
+  myModel = mf.modelSet[FLAGS.model_name]()
   m = myModel.build(FLAGS.num_classes, FLAGS.size, FLAGS.size)
   m.compile(loss='categorical_crossentropy', optimizer='adam', metrics=['accuracy'])
   batch = minibatch(FLAGS.img_path, FLAGS.seg_path, FLAGS.num_classes, FLAGS.batch_size, FLAGS.size)

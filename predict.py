@@ -1,11 +1,11 @@
-import models
 import tensorflow as tf
 import cv2
 import glob
 import numpy as np
 import itertools
+import model_factory as mf
 
-tf.app.flags.DEFINE_string('model_name', 'fcn32vgg', 'model name')
+tf.app.flags.DEFINE_string('model_name', 'fcn16vgg', 'model name')
 tf.app.flags.DEFINE_integer('size', 224, 'input height, width')
 tf.app.flags.DEFINE_string('logs_path', './logs/boxes.h5', 'checkpoint files')
 tf.app.flags.DEFINE_integer('num_classes', 2, '')
@@ -55,8 +55,7 @@ def predict():
   if FLAGS.output_path[len(FLAGS.output_path) - 1] != '/':
     FLAGS.output_path = FLAGS.output_path + '/'
 
-  modelSet = {'fcn32vgg':models.fcn32_vgg.FCN32VGG}
-  myModel = modelSet[FLAGS.model_name]()
+  myModel = mf.modelSet[FLAGS.model_name]()
   m = myModel.build(FLAGS.num_classes, FLAGS.size, FLAGS.size)
   m.load_weights(FLAGS.logs_path)
   m.compile(loss='categorical_crossentropy', optimizer='adam', metrics=['accuracy'])

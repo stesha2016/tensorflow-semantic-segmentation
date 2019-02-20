@@ -1,3 +1,4 @@
 models/*.pyc
 data/*
 logs/*
+*.pyc
