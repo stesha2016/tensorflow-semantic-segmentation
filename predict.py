@@ -5,7 +5,7 @@ import numpy as np
 import itertools
 import model_factory as mf
 
-tf.app.flags.DEFINE_string('model_name', 'fcn8vgg', 'model name')
+tf.app.flags.DEFINE_string('model_name', 'unet', 'model name')
 tf.app.flags.DEFINE_integer('size', 224, 'input height, width')
 tf.app.flags.DEFINE_string('logs_path', './logs/boxes.h5', 'checkpoint files')
 tf.app.flags.DEFINE_integer('num_classes', 2, '')
@@ -56,7 +56,7 @@ def predict():
     FLAGS.output_path = FLAGS.output_path + '/'
 
   myModel = mf.modelSet[FLAGS.model_name]()
-  m = myModel.build(FLAGS.num_classes, FLAGS.size, FLAGS.size)
+  m = myModel.build(FLAGS.num_classes, FLAGS.size, FLAGS.size, isTrain=False)
   m.load_weights(FLAGS.logs_path)
   m.compile(loss='categorical_crossentropy', optimizer='adam', metrics=['accuracy'])
 

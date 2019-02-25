@@ -66,3 +66,17 @@
   ***Loss约束***
   
   同FCN32
+  
+## UNET
+[论文地址](https://arxiv.org/pdf/1505.04597.pdf)
+
+***网络结构***
+
+结构图摘自论文
+
+![FCN8](https://github.com/stesha2016/tensorflow-semantic-segmentation/blob/master/images/UNET.png)
+
+UNET其实就是FCN的改进版本，FCN的decode过程是直接放大，这样很多信息都无法还原，UNET就采用逐步放大图片，并且与对应的encode层
+相加来保留图片的一些信息。
+
+但是论文中是逐步缩小了图片，论文中提到是处于内存考虑，我这边代码实现不会对图片尺寸做缩小。

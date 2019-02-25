@@ -46,7 +46,7 @@ class FCN32VGG:
     vgg.load_weights(self.model_path)
 
     print('pools', pool5)
-    conv_x = Conv2D(4096, (7, 7), activation='relu', padding='same')(pool5)
+    conv_x = Conv2D(4096, (1, 1), activation='relu', padding='same')(pool5)
     print('conv_x', conv_x)
     conv_x = Dropout(0.5)(conv_x)
     conv_x = Conv2D(4096, (1, 1), activation='relu', padding='same')(conv_x)

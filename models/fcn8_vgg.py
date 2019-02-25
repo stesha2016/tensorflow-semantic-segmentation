@@ -48,9 +48,11 @@ class FCN8VGG:
     vgg.load_weights(self.model_path)
 
     conv_pool5 = Conv2D(4096, (7, 7), activation='relu', padding='same')(pool5)
-    conv_pool5 = Dropout(0.5)(conv_pool5)
+    if isTrain:
+        conv_pool5 = Dropout(0.5)(conv_pool5)
     conv_pool5 = Conv2D(4096, (1, 1), activation='relu', padding='same')(conv_pool5)
-    conv_pool5 = Dropout(0.5)(conv_pool5)
+    if isTrain:
+        conv_pool5 = Dropout(0.5)(conv_pool5)
 
     conv_pool5 = Conv2D(num_classes, (1, 1), kernel_initializer='he_normal')(conv_pool5)
     conv_pool5 = Conv2DTranspose(num_classes, kernel_size=(8, 8), strides=(4, 4), padding='same', use_bias=False)(conv_pool5)

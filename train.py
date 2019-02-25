@@ -6,12 +6,12 @@ import numpy as np
 import itertools
 import model_factory as mf
 
-tf.app.flags.DEFINE_string('model_name', 'fcn8vgg', 'model name')
-tf.app.flags.DEFINE_integer('size', 224, 'input height, width')
+tf.app.flags.DEFINE_string('model_name', 'unet', 'model name')
+tf.app.flags.DEFINE_integer('size', 512, 'input height, width')
 tf.app.flags.DEFINE_string('logs_path', './logs', 'checkpoint files')
 tf.app.flags.DEFINE_integer('num_classes', 2, '')
-tf.app.flags.DEFINE_integer('batch_size', 16, '')
-tf.app.flags.DEFINE_integer('epochs', 20, '')
+tf.app.flags.DEFINE_integer('batch_size', 4, '')
+tf.app.flags.DEFINE_integer('epochs', 80, '')
 tf.app.flags.DEFINE_string('img_path', './data/boxes/train/', 'image path')
 tf.app.flags.DEFINE_string('seg_path', './data/boxes/train_segmentation', 'segmentation path')
 # tf.app.flags.DEFINE_boolean('clone_on_cpu', True,
@@ -54,21 +54,27 @@ def minibatch(img_path, seg_path, num_classes, batch_size, img_size):
   for im, seg in zip(images, segs):
     assert(im.split('/')[-1].split('.')[0] == seg.split('/')[-1].split('.')[0])
 
-  iterator = itertools.cycle(zip(images, segs))
-
+  idx = 0
   while True:
     X = []
     Y = []
-    for _ in range(batch_size):
-      im, seg = iterator.next()
-      X.append(getImage(im, img_size))
-      Y.append(getSeg(seg, img_size, num_classes))
-      yield np.array(X), np.array(Y)
+    if (idx + 1) * batch_size > len(images):
+      idx = 0
+      state = np.random.get_state()
+      np.random.shuffle(images)
+      np.random.set_state(state)
+      np.random.shuffle(segs)
+    for i in range(batch_size):
+      X.append(getImage(images[idx * batch_size + i], img_size))
+      Y.append(getSeg(segs[idx * batch_size + i], img_size, num_classes))
+    idx += 1
+    yield np.array(X), np.array(Y)
 
 def train():
   myModel = mf.modelSet[FLAGS.model_name]()
   m = myModel.build(FLAGS.num_classes, FLAGS.size, FLAGS.size)
-  m.compile(loss='categorical_crossentropy', optimizer='adam', metrics=['accuracy'])
+  adam = tf.keras.optimizers.Adam(lr=0.005, decay=0.04)
+  m.compile(loss='categorical_crossentropy', optimizer=adam, metrics=['accuracy'])
   batch = minibatch(FLAGS.img_path, FLAGS.seg_path, FLAGS.num_classes, FLAGS.batch_size, FLAGS.size)
 
   m.fit_generator(batch, FLAGS.batch_size, epochs=FLAGS.epochs, shuffle=False)
