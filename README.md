@@ -76,7 +76,9 @@
 
 ![FCN8](https://github.com/stesha2016/tensorflow-semantic-segmentation/blob/master/images/UNET.png)
 
-UNET其实就是FCN的改进版本，FCN的decode过程是直接放大，这样很多信息都无法还原，UNET就采用逐步放大图片，并且与对应的encode层
+UNET其实就是FCN的改进版本，FCN的decoder过程是直接放大，这样很多信息都无法还原，UNET就采用逐步放大图片，并且与对应的encoder层
 相加来保留图片的一些信息。
+
+但是与FCN还有一点比较大的却别，就是FCN中encoder层与decoder层使用Add相加，而UNET中encoder层和decoder对应层使用concat合并channel。
 
 但是论文中是逐步缩小了图片，论文中提到是处于内存考虑，我这边代码实现不会对图片尺寸做缩小。
