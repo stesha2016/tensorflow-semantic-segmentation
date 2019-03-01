@@ -48,7 +48,7 @@ class UNET:
     # block6
     x = Conv2DTranspose(512, kernel_size=(4, 4), strides=(2, 2), padding='same', name='deconv6_1')(x)
     x = BatchNormalization()(x, training=isTrain)
-    x = Add()([x, block4])
+    x = Concatenate(axis=-1)([x, block4])
     x = Conv2D(512, (3, 3), activation='relu', padding='same', name='conv6_2')(x)
     x = BatchNormalization()(x, training=isTrain)
     x = Conv2D(512, (3, 3), activation='relu', padding='same', name='conv6_3')(x)
@@ -57,7 +57,7 @@ class UNET:
     # block7
     x = Conv2DTranspose(256, kernel_size=(4, 4), strides=(2, 2), padding='same', name='deconv7_1')(x)
     x = BatchNormalization()(x, training=isTrain)
-    x = Add()([x, block3])
+    x = Concatenate(axis=-1)([x, block3])
     x = Conv2D(256, (3, 3), activation='relu', padding='same', name='conv7_2')(x)
     x = BatchNormalization()(x, training=isTrain)
     x = Conv2D(256, (3, 3), activation='relu', padding='same', name='conv7_3')(x)
@@ -66,7 +66,7 @@ class UNET:
     # block8
     x = Conv2DTranspose(128, kernel_size=(4, 4), strides=(2, 2), padding='same', name='deconv8_1')(x)
     x = BatchNormalization()(x, training=isTrain)
-    x = Add()([x, block2])
+    x = Concatenate(axis=-1)([x, block2])
     x = Conv2D(128, (3, 3), activation='relu', padding='same', name='conv8_2')(x)
     x = BatchNormalization()(x, training=isTrain)
     x = Conv2D(128, (3, 3), activation='relu', padding='same', name='conv8_3')(x)
@@ -75,7 +75,7 @@ class UNET:
     # block9
     x = Conv2DTranspose(64, kernel_size=(4, 4), strides=(2, 2), padding='same', name='deconv9_1')(x)
     x = BatchNormalization()(x, training=isTrain)
-    x = Add()([x, block1])
+    x = Concatenate(axis=-1)([x, block1])
     x = Conv2D(64, (3, 3), activation='relu', padding='same', name='conv9_2')(x)
     x = BatchNormalization()(x, training=isTrain)
     x = Conv2D(64, (3, 3), activation='relu', padding='same', name='conv9_3')(x)

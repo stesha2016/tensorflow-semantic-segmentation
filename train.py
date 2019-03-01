@@ -11,7 +11,7 @@ tf.app.flags.DEFINE_integer('size', 512, 'input height, width')
 tf.app.flags.DEFINE_string('logs_path', './logs', 'checkpoint files')
 tf.app.flags.DEFINE_integer('num_classes', 2, '')
 tf.app.flags.DEFINE_integer('batch_size', 4, '')
-tf.app.flags.DEFINE_integer('epochs', 80, '')
+tf.app.flags.DEFINE_integer('epochs', 60, '')
 tf.app.flags.DEFINE_string('img_path', './data/boxes/train/', 'image path')
 tf.app.flags.DEFINE_string('seg_path', './data/boxes/train_segmentation', 'segmentation path')
 # tf.app.flags.DEFINE_boolean('clone_on_cpu', True,
@@ -77,9 +77,10 @@ def train():
   m.compile(loss='categorical_crossentropy', optimizer=adam, metrics=['accuracy'])
   batch = minibatch(FLAGS.img_path, FLAGS.seg_path, FLAGS.num_classes, FLAGS.batch_size, FLAGS.size)
 
+  #m.fit_generator(batch, FLAGS.batch_size, epochs=FLAGS.epochs, shuffle=False)
+  #m.save('./logs/boxes.h5')
   m.fit_generator(batch, FLAGS.batch_size, epochs=FLAGS.epochs, shuffle=False)
-  m.save('./logs/boxes.h5')
-  #m.save_weights('./logs/checkpoint')
+  m.save_weights('./logs/checkpoint/model', save_format='tf')
 
 if __name__ == '__main__':
   train()

@@ -7,7 +7,7 @@ import model_factory as mf
 
 tf.app.flags.DEFINE_string('model_name', 'unet', 'model name')
 tf.app.flags.DEFINE_integer('size', 224, 'input height, width')
-tf.app.flags.DEFINE_string('logs_path', './logs/boxes.h5', 'checkpoint files')
+tf.app.flags.DEFINE_string('logs_path', './logs/checkpoint/model', 'checkpoint files')
 tf.app.flags.DEFINE_integer('num_classes', 2, '')
 tf.app.flags.DEFINE_string('input_path', './data/boxes/test/', 'test files path')
 tf.app.flags.DEFINE_string('output_path', './data/boxes/predict/', 'predict files path')
